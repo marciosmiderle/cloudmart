@@ -13,6 +13,8 @@ phases:
     commands:
       - echo Logging in to Amazon ECR...
       - aws --version
+      - whoami
+      - mkdir /root/.aws
       - echo '[default]' > /root/.aws/credentials
       - echo aws_access_id = $AWS_ACCESS_KEY_ID >> /root/.aws/credentials
       - echo aws_secret_access_key = $AWS_SECRET_ACCESS_KEY >> /root/.aws/credentials
