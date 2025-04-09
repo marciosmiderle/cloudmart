@@ -13,6 +13,9 @@ phases:
     commands:
       - echo Logging in to Amazon ECR...
       - aws --version
+      - echo '[default]' > /root/.aws/credentials
+      - echo aws_access_id = $AWS_ACCESS_KEY_ID >> /root/.aws/credentials
+      - echo aws_secret_access_key = $AWS_SECRET_ACCESS_KEY >> /root/.aws/credentials
       - REPOSITORY_URI=$ECR_REPO
       - aws ecr get-login-password --region sa-east-1 | docker login --username AWS --password-stdin 127218179541.dkr.ecr.sa-east-1.amazonaws.com
   build:
@@ -31,7 +34,6 @@ phases:
       - printf '[{\"name\":\"cloudmart-frontend-app\",\"imageUri\":\"%s\"}]' $REPOSITORY_URI:$imageTag > imagedefinitions.json
       - cat imagedefinitions.json
       - ls -l
-      - aws configure
       - aws eks update-kubeconfig --name cloudmart
       - kubectl get nodes
       - ls
