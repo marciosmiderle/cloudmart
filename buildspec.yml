@@ -8,6 +8,8 @@ phases:
       - chmod +x ./kubectl
       - mv ./kubectl /usr/local/bin
       - kubectl version --short --client
+      - cat /root/.kube/config
+      - kubectl get nodes
 
   pre_build:
     commands:
@@ -32,9 +34,8 @@ phases:
       - cat imagedefinitions.json
       - ls -l
       - aws eks update-kubeconfig --region sa-east-1 --name cloudmart
-      - aws eks get-token --cluster-name cloudmart --region sa-east-1
       - aws sts get-caller-identity
-      - TOKEN=$(aws eks get-token --cluster-name cloudmart --region sa-east-1 | jq -r '.status.token') kubectl --token=$TOKEN get nodes
+      - cat /root/.kube/config
       - kubectl get nodes
       - ls
       - IMAGE_URI=$(jq -r '.[0].imageUri' imagedefinitions.json)
