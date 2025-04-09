@@ -32,7 +32,9 @@ phases:
       - cat imagedefinitions.json
       - ls -l
       - aws eks update-kubeconfig --region sa-east-1 --name cloudmart
-#      - kubectl get nodes
+      - aws eks get-token --cluster-name cloudmart --region sa-east-1
+      - aws sts get-caller-identity
+      - kubectl get nodes
       - ls
       - IMAGE_URI=$(jq -r '.[0].imageUri' imagedefinitions.json)
       - echo $IMAGE_URI
