@@ -31,7 +31,7 @@ phases:
       - printf '[{\"name\":\"cloudmart-frontend-app\",\"imageUri\":\"%s\"}]' $REPOSITORY_URI:$imageTag > imagedefinitions.json
       - cat imagedefinitions.json
       - ls -l
-      - aws eks update-kubeconfig --region us-east-1 --name cloudmart
+      - aws eks update-kubeconfig --region sa-east-1 --name cloudmart
       - kubectl get nodes
       - ls
       - IMAGE_URI=$(jq -r '.[0].imageUri' imagedefinitions.json)
