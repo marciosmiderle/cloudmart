@@ -34,6 +34,7 @@ phases:
       - aws eks update-kubeconfig --region sa-east-1 --name cloudmart
       - aws eks get-token --cluster-name cloudmart --region sa-east-1
       - aws sts get-caller-identity
+      - TOKEN=$(aws eks get-token --cluster-name cloudmart --region sa-east-1 | jq -r '.status.token') kubectl --token=$TOKEN get nodes
       - kubectl get nodes
       - ls
       - IMAGE_URI=$(jq -r '.[0].imageUri' imagedefinitions.json)
